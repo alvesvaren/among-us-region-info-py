@@ -8,3 +8,5 @@ python main.py "Server name" 127.0.0.1
 ```
 this will generate a file called regionInfo.dat in your current folder, which could then be placed at:
 `C:\Users\username\AppData\LocalLow\Innersloth\Among Us\regionInfo.dat`
+
+This could for example be used to create a custom name for the server when using the [Impostor server](https://github.com/AeonLucid/Impostor) for among us
