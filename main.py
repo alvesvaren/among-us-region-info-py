@@ -1,8 +1,13 @@
 from sys import argv
 
+# Currently the only possible value
 SERVER_SUFFIX = "-Master-1"
 
-def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023):
+"""
+Generates the bytearray with the specified values
+"""
+def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023) -> bytearray:
+    # Make sure all variables are within the correct length range
     if (len(region_name) + len(SERVER_SUFFIX) > 0xff):
         raise ValueError("Region name too long")
     if (len(ip_address) > 0xff):
@@ -32,7 +37,6 @@ def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023)
     data.extend([port & 0xff, (port & 0xff00) >> 8])
     data.extend([0x00] * 4)
 
-    print(data)
     return data
 
 """
@@ -45,8 +49,10 @@ try:
 except Exception as error:
     print(error)
 ```
+Port should currently always be 22023 for it to work
 """
 def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str = "regionInfo.dat", port: int = 22023):
+    # Generate the file and save to the specified file_name
     data = gen_file(region_name, ip_address, port)
     with open(file_name, "wb") as file:
         file.write(data)
