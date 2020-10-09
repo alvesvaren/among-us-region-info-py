@@ -8,7 +8,7 @@ Generates the bytearray with the specified values
 """
 def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023) -> bytearray:
     # Make sure all variables are within the correct length range
-    if (len(region_name) + len(SERVER_SUFFIX) > 0xff):
+    if (len(region_name + SERVER_SUFFIX) > 0xff):
         raise ValueError("Region name too long")
     if (len(ip_address) > 0xff):
         raise ValueError("IP-address too long")
@@ -16,26 +16,26 @@ def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023)
         raise ValueError("Port too high")
 
     # Append region name
-    data = bytearray([0x00] * 4 + [len(region_name)])
+    data = bytearray(len(region_name).to_bytes(5, "big"))
     data += region_name.encode("ascii")
     
     # Append ip address
-    data.extend([len(ip_address)])
+    data.append(len(ip_address))
     data += ip_address.encode("ascii")
-    data.extend([0x01] + [0x00] * 3)
+    data.extend(0x1.to_bytes(4, "little"))
     
     # Append server name
     server_name = region_name + SERVER_SUFFIX
-    data.extend([len(server_name)])
+    data.append(len(server_name))
     data += server_name.encode("ascii")
     
     # Append ip address in byte form
     ip_address_bytes = bytearray()
     for value in ip_address.split("."):
-        ip_address_bytes.extend([int(value)])
+        ip_address_bytes.append(int(value))
     data += ip_address_bytes
-    data.extend([port & 0xff, (port & 0xff00) >> 8])
-    data.extend([0x00] * 4)
+    data.extend(port.to_bytes(2, "little"))
+    data.extend(0x0.to_bytes(4, "big"))
 
     return data
 
