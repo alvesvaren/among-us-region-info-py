@@ -4,7 +4,7 @@ from sys import argv
 SERVER_SUFFIX = "-Master-1"
 
 
-def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023) -> bytearray:
+def gen_stream(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023) -> bytearray:
     """
     Generates the bytearray with the specified values.
     Port should currently always be 22023 for it to work
@@ -43,7 +43,7 @@ def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023)
     return data
 
 
-def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str = "regionInfo.dat", port: int = 22023):
+def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str = "regionInfo.dat", port: int = 22023, *, log_bytes=False):
     """
     Creates and writes the among us regionInfo.dat file. 
     Port should currently always be 22023 for it to work
@@ -60,11 +60,28 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
     """
 
     # Generate the file and save to the specified file name
-    data = gen_file(region_name, ip_address, port)
+    data = gen_stream(region_name, ip_address, port)
     with open(file_name, "wb") as file:
         file.write(data)
 
+    # Log the bytes to stdout if specified
+    if (log_bytes):
+        print("Writing", content_from_stream(data), "to", file_name)
+
+
+def content_from_stream(stream: bytearray) -> str:
+    """
+    Create a string with the bytes in 'stream'
+    """
+    hex_array = []
+    for byte in stream:
+        hex_array.append(hex(byte))
+    return "{" + ", ".join(hex_array) + "}"
+
 
 if __name__ == "__main__":
-    print(f"Creating file using {argv[1:]}")
-    write_file(*argv[1:])
+    if (len(argv) < 2):
+        print('Usage: python main.py "Server name" 169.0.0.1')
+        exit(1)
+    print(f"Creating file using arguments {argv[1:]}")
+    write_file(*argv[1:], log_bytes=True)
