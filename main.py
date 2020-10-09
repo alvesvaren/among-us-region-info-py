@@ -85,5 +85,9 @@ if __name__ == "__main__":
     if (len(argv) < 2):
         print('Usage: python main.py "Server name" 127.0.0.1')
         exit(1)
-    print(f"Creating file using arguments {argv[1:]}")
-    write_file(*argv[1:], log_bytes=True)
+    print(f"Creating file using arguments '{', '.join(argv[1:])}'")
+    try:
+        write_file(*argv[1:], log_bytes=True)
+    except Exception as error:
+        print("Error:", error)
+        exit(2)
