@@ -47,7 +47,8 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
     """
     Creates and writes the among us regionInfo.dat file. 
     Port should currently always be 22023 for it to work
-    
+
+
     Example:
     ```py
     try:
