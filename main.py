@@ -57,7 +57,7 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
     Port should currently always be 22023 for it to work
     """
 
-    # Generate the file and save to the specified file_name
+    # Generate the file and save to the specified file name
     data = gen_file(region_name, ip_address, port)
     with open(file_name, "wb") as file:
         file.write(data)
