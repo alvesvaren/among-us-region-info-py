@@ -45,7 +45,9 @@ def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023)
 
 def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str = "regionInfo.dat", port: int = 22023):
     """
-    Creates and writes the among us regionInfo.dat file
+    Creates and writes the among us regionInfo.dat file. 
+    Port should currently always be 22023 for it to work
+    
     Example:
     ```py
     try:
@@ -54,7 +56,6 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
     except Exception as error:
         print(error)
     ```
-    Port should currently always be 22023 for it to work
     """
 
     # Generate the file and save to the specified file name
