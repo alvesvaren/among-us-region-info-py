@@ -12,8 +12,10 @@ def gen_stream(region_name: str, ip_address: str = "127.0.0.1", port: int = 2202
     Port should currently always be 22023 for it to work
     """
 
+    server_name = region_name + SERVER_SUFFIX
+
     # Make sure all variables are within the correct length range
-    if (len(region_name + SERVER_SUFFIX) > 0xff):
+    if (len(server_name) > 0xff):
         raise ValueError("Region name too long")
     if (len(ip_address) > 0xff):
         raise ValueError("IP-address too long")
@@ -30,7 +32,6 @@ def gen_stream(region_name: str, ip_address: str = "127.0.0.1", port: int = 2202
     data.extend(0x1.to_bytes(4, "little"))
 
     # Append server name
-    server_name = region_name + SERVER_SUFFIX
     data.append(len(server_name))
     data += server_name.encode("ascii")
 
