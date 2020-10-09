@@ -15,7 +15,7 @@ def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023)
         raise ValueError("Region name too long")
     if (len(ip_address) > 0xff):
         raise ValueError("IP-address too long")
-    if (port > 0xffff * 5):
+    if (port > 0x7fff):
         raise ValueError("Port too high")
 
     # Append region name
