@@ -6,7 +6,8 @@ SERVER_SUFFIX = "-Master-1"
 
 def gen_file(region_name: str, ip_address: str = "127.0.0.1", port: int = 22023) -> bytearray:
     """
-    Generates the bytearray with the specified values
+    Generates the bytearray with the specified values.
+    Port should currently always be 22023 for it to work
     """
 
     # Make sure all variables are within the correct length range
