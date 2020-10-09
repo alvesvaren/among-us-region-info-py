@@ -1,6 +1,6 @@
 # Among Us regionInfo.dat creator
 
-This is a simple python script to generate the regionInfo file needed for among us custom servers.
+This is a simple python script to generate the regionInfo file needed for custom servers in Among Us.
 
 ## Basic usage:
 
