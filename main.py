@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from sys import argv
 
 # Currently the only possible value
@@ -52,7 +54,7 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
     Example:
     ```py
     try:
-        writeFile("Example server", "169.0.0.1", port=12345))
+        write_file("Example server", "127.0.0.1", port=12345))
         print("Success!")
     except Exception as error:
         print(error)
@@ -81,7 +83,7 @@ def content_from_stream(stream: bytearray) -> str:
 
 if __name__ == "__main__":
     if (len(argv) < 2):
-        print('Usage: python main.py "Server name" 169.0.0.1')
+        print('Usage: python main.py "Server name" 127.0.0.1')
         exit(1)
     print(f"Creating file using arguments {argv[1:]}")
     write_file(*argv[1:], log_bytes=True)
