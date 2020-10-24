@@ -1,8 +1,7 @@
 #!/usr/bin/python
-
 from sys import argv
 
-# Currently the only possible value
+# Currently the only possible value when using the impostor custom server
 SERVER_SUFFIX = "-Master-1"
 
 
@@ -15,18 +14,18 @@ def gen_stream(region_name: str, ip_address: str = "127.0.0.1", port: int = 2202
     server_name = region_name + SERVER_SUFFIX
 
     # Make sure all variables are within the correct length range
-    if (len(server_name) > 0xff):
+    if len(server_name) > 0xff:
         raise ValueError("Region name too long")
-    if (len(ip_address) > 0xff):
+    if len(ip_address) > 0xff:
         raise ValueError("IP-address too long")
-    if (port > 0x7fff):
+    if port > 0x7fff:
         raise ValueError("Port too high")
 
     # Append region name
     data = bytearray(len(region_name).to_bytes(5, "big"))
     data += region_name.encode("ascii")
 
-    # Append ip address
+    # Append ip address string
     data.append(len(ip_address))
     data += ip_address.encode("ascii")
     data.extend(0x1.to_bytes(4, "little"))
@@ -40,6 +39,8 @@ def gen_stream(region_name: str, ip_address: str = "127.0.0.1", port: int = 2202
     for value in ip_address.split("."):
         ip_address_bytes.append(int(value))
     data += ip_address_bytes
+
+    # Append port
     data.extend(port.to_bytes(2, "little"))
     data.extend(0x0.to_bytes(4, "big"))
 
@@ -68,7 +69,7 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
         file.write(data)
 
     # Log the bytes to stdout if specified
-    if (log_bytes):
+    if log_bytes:
         print("Writing", content_from_stream(data), "to", file_name)
 
 
@@ -79,17 +80,19 @@ def content_from_stream(stream: bytearray) -> str:
     hex_array = []
     for byte in stream:
         hex_array.append(hex(byte))
-    return "{" + ", ".join(hex_array) + "}"
+    return f"{{{', '.join(hex_array)}}}"
 
 
 if __name__ == "__main__":
-    if (len(argv) < 2):
+    if len(argv) < 2:
         print('Usage: python main.py <name> [ip-address] [file-name] [port]')
         print('Example: python main.py "Server name" 127.0.0.1')
-        exit(1)
+        
+        # The standard exit code for usage errors
+        exit(64)
     print(f"Creating file using arguments '{', '.join(argv[1:])}'")
     try:
         write_file(*argv[1:], log_bytes=True)
     except Exception as error:
         print("Error:", error)
-        exit(2)
+        exit(1)
