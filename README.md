@@ -2,6 +2,12 @@
 
 This is a simple python script to generate the regionInfo file needed for custom servers in Among Us.
 
+## Why?
+
+Compared to most other scripts and programs which all create the same regionInfo file, this program allows you to change the name that shows up in the bottom when in Among Us.
+
+I've also tried to make the code as readable and simple as possible.
+
 ## Basic usage:
 
 ```sh
