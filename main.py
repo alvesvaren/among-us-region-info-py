@@ -68,7 +68,7 @@ def write_file(region_name: str, ip_address: str = "127.0.0.1", file_name: str =
     with open(file_name, "wb") as file:
         file.write(data)
 
-    # Log the bytes to stdout if specified
+    # Log the bytes to the console if specified
     if log_bytes:
         print("Writing", content_from_stream(data), "to", file_name)
 
