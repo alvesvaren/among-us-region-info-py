@@ -18,3 +18,10 @@ This will generate a file called regionInfo.dat in your current folder, which co
 `C:\Users\username\AppData\LocalLow\Innersloth\Among Us\regionInfo.dat`
 
 This could for example be used to create a custom name for the server when using the [Impostor server](https://github.com/AeonLucid/Impostor) for among us
+
+
+## Run online:
+
+You can run this online in [this repl.it project](https://repl.it/@Evla03/among-us-region-info-py) without the need to set up a local python instance.
+
+After running the program in the shell, [download the project zip from repl.it](https://docs.repl.it/tutorials/02-managing-files-using-repl-it#exporting-our-weather-data-files) and extract the regionInfo.dat file.
